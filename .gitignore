@@ -1,0 +1,10 @@
+# Ignore everything by default
+*
+
+# Allow the Source folder and its contents
+!Source/
+!Source/**
+
+# Allow .gitignore itself
+!.gitignore
+
