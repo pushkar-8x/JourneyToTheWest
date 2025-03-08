@@ -43,9 +43,10 @@ void ABlackMyth::BeginPlay()
 void ABlackMyth::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-
 }
+
+
+
 
 void ABlackMyth::MoveForward(float value)
 {
@@ -176,6 +177,14 @@ void ABlackMyth::Arm()
 void ABlackMyth::FinishEquip()
 {
 	ActionState = EActionState::EAS_Unoccupied;
+}
+
+void ABlackMyth::SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled)
+{
+	if (EquippedWeapon && EquippedWeapon->GetWeaponBox())
+	{
+		EquippedWeapon->GetWeaponBox()->SetCollisionEnabled(CollisionEnabled);
+	}
 }
 
 void ABlackMyth::OnEKeyPressed()

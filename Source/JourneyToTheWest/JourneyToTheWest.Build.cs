@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class FinalFantasy : ModuleRules
+public class JourneyToTheWest : ModuleRules
 {
-	public FinalFantasy(ReadOnlyTargetRules Target) : base(Target)
+	public JourneyToTheWest(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	

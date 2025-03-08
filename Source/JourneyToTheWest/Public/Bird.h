@@ -8,7 +8,7 @@
 #include "Bird.generated.h"
 
 UCLASS()
-class FINALFANTASY_API ABird : public APawn
+class JOURNEYTOTHEWEST_API ABird : public APawn
 {
 	GENERATED_BODY()
 

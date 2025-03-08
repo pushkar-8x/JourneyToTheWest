@@ -15,7 +15,7 @@ class UAnimMontage;
 class AWeapon;
 
 UCLASS()
-class FINALFANTASY_API ABlackMyth : public ACharacter
+class JOURNEYTOTHEWEST_API ABlackMyth : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -29,7 +29,6 @@ protected:
 	virtual void BeginPlay() override;
 	void MoveForward(float value);
 	void MoveRight(float value);
-
 	void Turn(float value);
 	void LookUp(float value);
 
@@ -51,6 +50,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 		void FinishEquip();
+
+	UFUNCTION(BlueprintCallable)
+		void SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled);
 
 	void OnEKeyPressed();
 

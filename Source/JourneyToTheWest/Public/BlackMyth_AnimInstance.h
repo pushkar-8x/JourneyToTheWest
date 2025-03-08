@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class FINALFANTASY_API UBlackMyth_AnimInstance : public UAnimInstance
+class JOURNEYTOTHEWEST_API UBlackMyth_AnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 	

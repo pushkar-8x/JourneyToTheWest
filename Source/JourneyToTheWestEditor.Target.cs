@@ -3,13 +3,13 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class FinalFantasyEditorTarget : TargetRules
+public class JourneyToTheWestEditorTarget : TargetRules
 {
-	public FinalFantasyEditorTarget(TargetInfo Target) : base(Target)
+	public JourneyToTheWestEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 
-		ExtraModuleNames.AddRange( new string[] { "FinalFantasy" } );
+		ExtraModuleNames.AddRange( new string[] { "JourneyToTheWest" } );
 	}
 }

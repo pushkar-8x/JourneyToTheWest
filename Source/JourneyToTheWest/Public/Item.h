@@ -12,7 +12,7 @@ enum class EItemState : uint8
 };
 
 UCLASS()
-class FINALFANTASY_API AItem : public AActor
+class JOURNEYTOTHEWEST_API AItem : public AActor
 {
 	GENERATED_BODY()
 	
