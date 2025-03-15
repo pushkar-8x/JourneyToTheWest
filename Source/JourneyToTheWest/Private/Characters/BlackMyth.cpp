@@ -120,7 +120,6 @@ void ABlackMyth::PlayAttackMontage()
 
 	if (AnimInstance && AttackMontage)
 	{
-		GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Black, FString("Calling Attack"));
 		AnimInstance->Montage_Play(AttackMontage);
 		int32 selection = FMath::RandRange(0, 1);
 
@@ -184,6 +183,7 @@ void ABlackMyth::SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnab
 	if (EquippedWeapon && EquippedWeapon->GetWeaponBox())
 	{
 		EquippedWeapon->GetWeaponBox()->SetCollisionEnabled(CollisionEnabled);
+		EquippedWeapon->IgnoreActors.Empty();
 	}
 }
 
