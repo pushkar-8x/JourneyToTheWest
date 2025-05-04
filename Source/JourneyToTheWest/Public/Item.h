@@ -54,6 +54,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 		class USphereComponent* Sphere;
 
+	UPROPERTY(EditAnywhere)
+		class UNiagaraComponent* EmbersFx;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sin Parameters")
 		float Amplitude = 0.25f;
 

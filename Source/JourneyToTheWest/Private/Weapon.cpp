@@ -8,6 +8,8 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "HitInterface.h"
+#include "NiagaraComponent.h"
+
 
 AWeapon::AWeapon()
 {
@@ -57,16 +59,17 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	UKismetSystemLibrary::BoxTraceSingle(this, Start, End , FVector(5.f,5.f,5.f),
 		BoxTraceStart->GetComponentRotation() ,
 		ETraceTypeQuery::TraceTypeQuery1 ,false , ActorsToIgnore ,
-		EDrawDebugTrace::ForDuration , BoxHit , true );
+		EDrawDebugTrace::None , BoxHit , true );
 
 	if (BoxHit.GetActor())
 	{
 		IHitInterface* HitInterface = Cast<IHitInterface>(BoxHit.GetActor());
 		if (HitInterface)
 		{
-			HitInterface->GetHit(BoxHit.ImpactPoint);
+			HitInterface->Execute_GetHit(BoxHit.GetActor(), BoxHit.ImpactPoint);
 		}
 		IgnoreActors.AddUnique(BoxHit.GetActor());
+		CreateFields(BoxHit.ImpactPoint);
 	}
 
 	
@@ -87,6 +90,10 @@ void AWeapon::Equip(USceneComponent* InParent, FName InSocketName)
 	if (Sphere)
 	{
 		Sphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+	if (EmbersFx)
+	{
+		EmbersFx->Deactivate();
 	}
 }
 

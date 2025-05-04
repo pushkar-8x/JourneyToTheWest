@@ -4,6 +4,7 @@
 #include "Item.h"
 #include "Components/SphereComponent.h"
 #include "Characters/BlackMyth.h"
+#include "NiagaraComponent.h"
 
 AItem::AItem()
 {
@@ -15,6 +16,9 @@ AItem::AItem()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	Sphere->SetupAttachment(GetRootComponent());
+
+	EmbersFx = CreateDefaultSubobject<UNiagaraComponent>(TEXT("EmbersFx"));
+	EmbersFx->SetupAttachment(GetRootComponent());
 
 }
 

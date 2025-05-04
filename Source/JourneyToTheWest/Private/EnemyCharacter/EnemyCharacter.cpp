@@ -46,14 +46,20 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
-void AEnemyCharacter::GetHit(const FVector& ImpactPoint)
+void AEnemyCharacter::GetHit_Implementation(const FVector& ImpactPoint)
 {
 	//DRAW_SPHERE(ImpactPoint);
-	DRAW_SPHERE_COLOR(ImpactPoint, FColor::Yellow);
+	//DRAW_SPHERE_COLOR(ImpactPoint, FColor::Yellow);
 	SetDirectionalHitReaction(ImpactPoint);
 	if (HitSoundEffect)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, HitSoundEffect, ImpactPoint) ;
+	}
+	if (HitFx)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(
+			GetWorld(), HitFx, ImpactPoint
+		);
 	}
 }
 
@@ -100,13 +106,13 @@ void AEnemyCharacter::SetDirectionalHitReaction(const FVector& ImpactPoint)
 
 	PlayHitReactMontage(SectionName);
 
-	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + ForwardVector * 60.f,
+	/*UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + ForwardVector * 60.f,
 		5.f, FColor::Red, 5.f);
 
 	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + HitVector * 60.f,
 		5.f, FColor::Blue, 5.f);
 
 	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + CrossProduct * 100.f,
-		5.f, FColor::Blue, 5.f);
+		5.f, FColor::Blue, 5.f);*/
 }
 
