@@ -6,6 +6,9 @@
 #include "Debug/DebugMacros.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "ActorComponents/AttributeComponent.h"
+#include "Components/WidgetComponent.h"
+#include "HUD/Widget_HealthBar.h"
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
@@ -16,12 +19,19 @@ AEnemyCharacter::AEnemyCharacter()
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
 
 	GetMesh()->SetGenerateOverlapEvents(true);
+
+	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("Attributes"));
+	HealthBarComponent = CreateDefaultSubobject<UWidget_HealthBar>(TEXT("HealthBarComponent"));
+	HealthBarComponent->SetupAttachment(GetRootComponent());
 }
 
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (HealthBarComponent)
+	{
+		HealthBarComponent->SetHealthPercentage(0.1f);
+	}
 }
 
 void AEnemyCharacter::Tick(float DeltaTime)

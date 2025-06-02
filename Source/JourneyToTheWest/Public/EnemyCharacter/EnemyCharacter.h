@@ -7,6 +7,9 @@
 #include "HitInterface.h"
 #include "EnemyCharacter.generated.h"
 
+class UAttributeComponent;
+class UWidgetComponent;
+
 UCLASS()
 class JOURNEYTOTHEWEST_API AEnemyCharacter : public ACharacter , public IHitInterface
 {
@@ -29,6 +32,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = VisualEffects)
 		UParticleSystem* HitFx;
 
+private:
+	UPROPERTY(VisibleAnywhere)
+	UAttributeComponent* Attributes;
+
+	UPROPERTY(VisibleAnywhere)
+		class UWidget_HealthBar* HealthBarComponent;
 
 protected:
 
