@@ -18,7 +18,7 @@ class JOURNEYTOTHEWEST_API AWeapon : public AItem
 
 public:
 	AWeapon();
-	void Equip(USceneComponent* InParent , FName InSocketName);
+	void Equip(USceneComponent* InParent , FName InSocketName , AActor* Owner , APawn* Instigator);
 	void AttachMeshToSocket(USceneComponent* InParent, const FName& InSocketName);
 	TArray<AActor*> IgnoreActors;
 protected:
@@ -64,6 +64,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* BoxTraceEnd;
 
+	UPROPERTY(EditAnywhere)
+		float WeaponDamage = 20.f;
 	
 
 public:

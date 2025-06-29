@@ -24,4 +24,5 @@ class JOURNEYTOTHEWEST_API IHitInterface
 public:
 	UFUNCTION(BlueprintNativeEvent)
 	void GetHit(const FVector& ImpactPoint);
+
 };

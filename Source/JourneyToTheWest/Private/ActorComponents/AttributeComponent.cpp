@@ -26,3 +26,18 @@ void UAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
+void UAttributeComponent::ReceiveDamage(float Damage)
+{
+	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0, MaxHealth);
+}
+
+float UAttributeComponent::GetHealthPercentage()
+{
+	return CurrentHealth/MaxHealth;
+}
+
+bool UAttributeComponent::IsAlive()
+{
+	return CurrentHealth > 0.f;
+}
+
