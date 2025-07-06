@@ -46,23 +46,27 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 {
 	const FVector Start = BoxTraceStart->GetComponentLocation();
 	const FVector End = BoxTraceEnd->GetComponentLocation();
-	GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::White, OtherActor->GetName());
+	
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(this);
+	ActorsToIgnore.Add(GetOwner());
 
+	//GEngine->AddOnScreenDebugMessage(3, 2.f, FColor::White, GetOwner()->GetName());
 	for (AActor* Actor : IgnoreActors)
 	{
 		ActorsToIgnore.AddUnique(Actor);
 	}
-
+	
 	FHitResult BoxHit;
-	UKismetSystemLibrary::BoxTraceSingle(this, Start, End , FVector(5.f,5.f,5.f),
+	UKismetSystemLibrary::BoxTraceSingle(this, Start, End , FVector(10.f,10.f,10.f),
 		BoxTraceStart->GetComponentRotation() ,
-		ETraceTypeQuery::TraceTypeQuery1 ,false , ActorsToIgnore ,
+		ETraceTypeQuery::TraceTypeQuery1 ,true , ActorsToIgnore ,
 		EDrawDebugTrace::None , BoxHit , true );
 
+	
 	if (BoxHit.GetActor())
 	{
+		GEngine->AddOnScreenDebugMessage(2, 2.f, FColor::White, BoxHit.GetActor()->GetName());
 		UGameplayStatics::ApplyDamage(BoxHit.GetActor(),
 			WeaponDamage,
 			GetInstigator()->GetController(), this, UDamageType::StaticClass()
@@ -76,6 +80,10 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		IgnoreActors.AddUnique(BoxHit.GetActor());
 		CreateFields(BoxHit.ImpactPoint);
 		
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(2, 2.f, FColor::White, FString("Nothing detected!"));
 	}
 
 	
