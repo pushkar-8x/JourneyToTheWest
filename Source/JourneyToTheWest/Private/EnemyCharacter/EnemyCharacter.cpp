@@ -3,6 +3,7 @@
 
 #include "EnemyCharacter/EnemyCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Debug/DebugMacros.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -23,6 +24,11 @@ AEnemyCharacter::AEnemyCharacter()
 	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("Attributes"));
 	HealthBarComponent = CreateDefaultSubobject<UWidget_HealthBar>(TEXT("HealthBarComponent"));
 	HealthBarComponent->SetupAttachment(GetRootComponent());
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationRoll = false;
+	bUseControllerRotationYaw = false;
 }
 
 void AEnemyCharacter::BeginPlay()

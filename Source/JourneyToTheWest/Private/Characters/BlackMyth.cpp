@@ -92,7 +92,7 @@ void ABlackMyth::LookUp(float value)
 
 void ABlackMyth::Attack()
 {
-	if (ActionState == EActionState::EAS_Unoccupied && CharacterState != ECharacterState::ECS_Unoccupied)
+	if (ActionState == EActionState::EAS_Unoccupied && CharacterState != ECharacterState::ECS_Unoccupied || ActionState==EActionState::EAS_AttackInCombo)
 	{
 		PlayAttackMontage();
 		
@@ -124,7 +124,7 @@ void ABlackMyth::PlayAttackMontage()
 		int32 selection = FMath::RandRange(0, 1);
 
 		FName SectionName = FName();
-		switch (selection)
+		switch (attackComboIndex)
 		{
 		case 0:
 			SectionName = "Attack1";
@@ -132,6 +132,10 @@ void ABlackMyth::PlayAttackMontage()
 
 		case 1:
 			SectionName = "Attack2";
+			break;
+
+		case 2:
+			SectionName = "Attack3";
 			break;
 
 		default:
@@ -155,6 +159,14 @@ void ABlackMyth::PlayEquipMontage(FName SectionName)
 void ABlackMyth::AttackEnds()
 {
 	ActionState = EActionState::EAS_Unoccupied;
+	attackComboIndex = 0;
+}
+
+void ABlackMyth::ForwardCombo()
+{
+	attackComboIndex = (attackComboIndex + 1) % 3;
+	ActionState = EActionState::EAS_AttackInCombo;
+
 }
 
 void ABlackMyth::Disarm()

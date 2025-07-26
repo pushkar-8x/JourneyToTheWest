@@ -43,6 +43,9 @@ protected:
 		void AttackEnds();
 
 	UFUNCTION(BlueprintCallable)
+		void ForwardCombo();
+
+	UFUNCTION(BlueprintCallable)
 		void Disarm();
 
 	UFUNCTION(BlueprintCallable)
@@ -68,6 +71,10 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly)
 	 AItem* OverlappingItem;
+
+
+	UPROPERTY(VisibleAnywhere)
+		int32 attackComboIndex = 0;
 
 	UPROPERTY(VisibleInstanceOnly, Category = "Weapon")
 		AWeapon* EquippedWeapon;
