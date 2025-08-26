@@ -35,7 +35,7 @@ ABlackMyth::ABlackMyth()
 void ABlackMyth::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	Tags.Add(FName("Wukong"));
 }
 
 

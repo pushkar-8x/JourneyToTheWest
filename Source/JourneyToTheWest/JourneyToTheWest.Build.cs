@@ -8,7 +8,7 @@ public class JourneyToTheWest : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","GeometryCollectionEngine","Niagara","UMG" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","GeometryCollectionEngine","Niagara","UMG","AIModule" , "NavigationSystem" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
