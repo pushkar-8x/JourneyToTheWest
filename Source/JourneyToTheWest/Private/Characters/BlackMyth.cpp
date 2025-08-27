@@ -92,12 +92,23 @@ void ABlackMyth::LookUp(float value)
 
 void ABlackMyth::Attack()
 {
-	if (ActionState == EActionState::EAS_Unoccupied && CharacterState != ECharacterState::ECS_Unoccupied || ActionState==EActionState::EAS_AttackInCombo)
+	if (CanAttack())
 	{
 		PlayAttackMontage();
 		
 	}
 	
+}
+
+void ABlackMyth::Die()
+{
+
+}
+
+bool ABlackMyth::CanAttack()
+{
+	return ActionState == EActionState::EAS_Unoccupied && CharacterState !=
+		ECharacterState::ECS_Unoccupied || ActionState == EActionState::EAS_AttackInCombo;
 }
 
 bool ABlackMyth::CanDisarm()
@@ -190,14 +201,12 @@ void ABlackMyth::FinishEquip()
 	ActionState = EActionState::EAS_Unoccupied;
 }
 
-void ABlackMyth::SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled)
+void ABlackMyth::GetHit_Implementation(const FVector& ImpactPoint)
 {
-	if (EquippedWeapon && EquippedWeapon->GetWeaponBox())
-	{
-		EquippedWeapon->GetWeaponBox()->SetCollisionEnabled(CollisionEnabled);
-		EquippedWeapon->IgnoreActors.Empty();
-	}
+
 }
+
+
 
 void ABlackMyth::OnEKeyPressed()
 {

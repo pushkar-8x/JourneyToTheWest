@@ -4,10 +4,10 @@
 #include "EnemyCharacter/EnemyCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "ActorComponents/AttributeComponent.h"
 #include "Debug/DebugMacros.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "ActorComponents/AttributeComponent.h"
 #include "Components/WidgetComponent.h"
 #include "AIController.h"
 #include "Perception/PawnSensingComponent.h"
@@ -25,7 +25,7 @@ AEnemyCharacter::AEnemyCharacter()
 
 	GetMesh()->SetGenerateOverlapEvents(true);
 
-	Attributes = CreateDefaultSubobject<UAttributeComponent>(TEXT("Attributes"));
+	
 	HealthBarComponent = CreateDefaultSubobject<UWidget_HealthBar>(TEXT("HealthBarComponent"));
 	HealthBarComponent->SetupAttachment(GetRootComponent());
 
@@ -160,15 +160,7 @@ void AEnemyCharacter::PatrolWaitOver()
 	
 }
 
-void AEnemyCharacter::PlayHitReactMontage(const FName& SectionName)
-{
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if (AnimInstance && HitReactMontage)
-	{
-		AnimInstance->Montage_Play(HitReactMontage);
-		AnimInstance->Montage_JumpToSection(SectionName, HitReactMontage);
-	}
-}
+
 
 void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -206,58 +198,7 @@ void AEnemyCharacter::GetHit_Implementation(const FVector& ImpactPoint)
 	}
 }
 
-void AEnemyCharacter::SetDirectionalHitReaction(const FVector& ImpactPoint)
-{
-	const FVector ForwardVector = GetActorForwardVector();
-	const FVector ImpactLowered(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
-	const FVector HitVector = (ImpactPoint - GetActorLocation()).GetSafeNormal();
 
-	const double CosAngle = FVector::DotProduct(ForwardVector, HitVector);
-	double Angle = FMath::Acos(CosAngle);
-
-	Angle = FMath::RadiansToDegrees(Angle);
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Green, FString::Printf(TEXT("Angle : %f"), Angle));
-	}
-
-	const FVector CrossProduct = FVector::CrossProduct(ForwardVector, HitVector);
-
-	if (CrossProduct.Z < 0.f)
-	{
-		Angle *= -1.f;
-	}
-
-	FName SectionName("FromLeft");
-	if (Angle <= 45.f && Angle >= -45.f)
-	{
-		SectionName = FName("FromFront");
-	}
-	else if (Angle >= 45.f && Angle <= 135.f)
-	{
-		SectionName = FName("FromRight");
-	}
-	else if (Angle <= -45.f && Angle <= -135.f)
-	{
-		SectionName = FName("FromLeft");
-	}
-	else if (Angle >= 135.f && Angle <= -135.f)
-	{
-		SectionName = FName("FromBack");
-	}
-
-	PlayHitReactMontage(SectionName);
-
-	/*UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + ForwardVector * 60.f,
-		5.f, FColor::Red, 5.f);
-
-	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + HitVector * 60.f,
-		5.f, FColor::Blue, 5.f);
-
-	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + CrossProduct * 100.f,
-		5.f, FColor::Blue, 5.f);*/
-}
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
@@ -295,6 +236,15 @@ void AEnemyCharacter::Die()
 
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SetLifeSpan(5.0f);
+}
+
+void AEnemyCharacter::Attack()
+{
+
+}
+
+void AEnemyCharacter::AttackEnds()
+{
 }
 
 bool AEnemyCharacter::InTargetRange(AActor* Target, double Radius)

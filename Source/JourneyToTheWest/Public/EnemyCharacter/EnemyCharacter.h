@@ -3,20 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
-#include "HitInterface.h"
+
 #include "Characters/CharacterType.h"
+#include "Characters/BaseCharacter.h"
 #include "Perception/PawnSensingComponent.h"
 #include "Navigation/PathFollowingComponent.h" // <-- for FPathFollowingResult
 #include "EnemyCharacter.generated.h"
 
 
-class UAttributeComponent;
+
 class UWidgetComponent;
 //class UPawnSensingComponent* PawnSensing;
 
 UCLASS()
-class JOURNEYTOTHEWEST_API AEnemyCharacter : public ACharacter , public IHitInterface
+class JOURNEYTOTHEWEST_API AEnemyCharacter : public ABaseCharacter 
 {
 	GENERATED_BODY()
 
@@ -24,21 +24,7 @@ public:
 
 	AEnemyCharacter();
 
-	/**
-	*Animation Montages
-	*/
-
-	UPROPERTY(EditDefaultsOnly, Category = Montages)
-		UAnimMontage* HitReactMontage;
-
-	UPROPERTY(EditDefaultsOnly, Category = Montages)
-		UAnimMontage* DeathMontage;
-
-	UPROPERTY(EditAnywhere, Category = Audio)
-		USoundBase* HitSoundEffect;
-
-	UPROPERTY(EditAnywhere, Category = VisualEffects)
-		UParticleSystem* HitFx;
+	
 
 	UPROPERTY()
 		AActor* CombatTarget;
@@ -71,8 +57,7 @@ public:
 
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	UAttributeComponent* Attributes;
+
 
 	UPROPERTY(VisibleAnywhere)
 		class UWidget_HealthBar* HealthBarComponent;
@@ -96,10 +81,11 @@ private:
 protected:
 
 	virtual void BeginPlay() override;
-	void Die();
-
+	virtual void Die() override;
+	virtual void Attack() override;
+	virtual void AttackEnds() override;
 	bool InTargetRange(AActor* Target, double Radius);
-	void PlayHitReactMontage(const FName& SectionName);
+	
 
 	void MoveToTarget(AActor* PatrolTarget);
 
@@ -112,8 +98,7 @@ public:
 	void UpdatePatrolTarget();
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual void GetHit_Implementation(const FVector& ImpactPoint);
-	void SetDirectionalHitReaction(const FVector& ImpactPoint);
+	virtual void GetHit_Implementation(const FVector& ImpactPoint) override;
 	// EnemyCharacter.h
 
 

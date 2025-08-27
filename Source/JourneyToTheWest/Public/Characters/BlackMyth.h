@@ -3,19 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
 #include "CharacterType.h"
 #include "Item.h"
+#include "BaseCharacter.h"
 #include "BlackMyth.generated.h"
 
 class UCameraComponent;
 class USpringArmComponent;
 class AItem;
-class UAnimMontage;
-class AWeapon;
 
 UCLASS()
-class JOURNEYTOTHEWEST_API ABlackMyth : public ACharacter
+class JOURNEYTOTHEWEST_API ABlackMyth : public ABaseCharacter
 {
 	GENERATED_BODY()
 
@@ -32,15 +30,16 @@ protected:
 	void Turn(float value);
 	void LookUp(float value);
 
-	void Attack();
+	virtual void Attack() override;
+	virtual void Die() override;
+	virtual bool CanAttack() override;
 	bool CanDisarm();
 	bool CanArm();
 	void PlayAttackMontage();
 
 	void PlayEquipMontage(FName SectionName);
 
-	UFUNCTION(BlueprintCallable)
-		void AttackEnds();
+	virtual void AttackEnds() override;
 
 	UFUNCTION(BlueprintCallable)
 		void ForwardCombo();
@@ -54,8 +53,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 		void FinishEquip();
 
-	UFUNCTION(BlueprintCallable)
-		void SetWeaponCollisionEnabled(ECollisionEnabled::Type CollisionEnabled);
+	virtual void GetHit_Implementation(const FVector& ImpactPoint) override;
 
 	void OnEKeyPressed();
 
@@ -76,11 +74,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		int32 attackComboIndex = 0;
 
-	UPROPERTY(VisibleInstanceOnly, Category = "Weapon")
-		AWeapon* EquippedWeapon;
+	
 
-	UPROPERTY(EditDefaultsOnly , Category = Montages)
-		UAnimMontage* AttackMontage;
 	
 	UPROPERTY(EditDefaultsOnly , Category = Montages)
 		UAnimMontage* EquipMontage;
